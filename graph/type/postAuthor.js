@@ -1,6 +1,6 @@
 import AuthorType from "./authorType"
 import { GraphQLObjectType, GraphQLInt, GraphQLString } from "graphql"
-import { fakeDatabase } from "../src/FakeDatabase"
+import { fakeDatabase } from "../../src/FakeDatabase"
 
 const PostType = new GraphQLObjectType({
     name: 'post',
