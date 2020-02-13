@@ -10,7 +10,7 @@ import {
 
 import { fakeDatabase } from "../../src/FakeDatabase"
 
-import PostType from '../type/postAuthor'
+import PostType from '../type/postType'
 
 const mainSchema = new GraphQLSchema({
     query: new GraphQLObjectType({
