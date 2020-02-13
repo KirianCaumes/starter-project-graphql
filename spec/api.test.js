@@ -43,6 +43,22 @@ describe('GET /', () => {
         expect(response.body.data.post.title).toBe("Second blog post")
     })
 
+    test('verify an author has posts', async () => {
+        const query_string = `{
+            author(id:"88d6bec2") {
+              name
+              posts {
+                title
+              }
+            }
+          }
+          `
+        response = await request(app)
+            .post('/graphql')
+            .send({ query: query_string })
+        expect(response.body.data.author.posts.length).toBe(2)
+    })
+
     test('verify send many posts has authors', async () => {
         const query_string = `{
             posts {
