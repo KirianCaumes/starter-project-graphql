@@ -4,21 +4,23 @@ import {
     GraphQLObjectType,
     GraphQLString,
     GraphQLList,
+    GraphQLInt,
+    GraphQLNonNull,
 } from 'graphql';
 
-import fakeDatabase from "./FakeDatabase"
-/*
-const posts = new GraphQLObjectType({
-    name: 'posts',
+import { fakeDatabase } from "./FakeDatabase"
+
+const PostType = new GraphQLObjectType({
+    name: 'post',
     fields: () => ({
-      id: { type: graphql.GraphQLString },
-      title: { type: GraphQLString },
-      content: { type: GraphQLString },
-      author: { type: GraphQLString },
+        id: { type: (GraphQLInt) },
+        title: { type: GraphQLString },
+        content: { type: GraphQLString },
+        author: { type: GraphQLString },
     })
-  });
-  */
-/*
+});
+
+
 const queryRoot = new GraphQLObjectType({
     name: 'Query',
     fields: () => ({
@@ -26,28 +28,22 @@ const queryRoot = new GraphQLObjectType({
             type: GraphQLString,
             resolve: () => "Hello World"
         },
-        posts : {
-            type:new GraphQLList(posts),
+        posts: {
+            type: new GraphQLList(PostType),
             resolve: () => fakeDatabase.getBlogPosts()
+        },
+        post: {
+            type: PostType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLInt)
+                },
+            },
+            resolve: (parent, args) => fakeDatabase.getBlogPost(args.id)
         }
     })
 })
-*/
-const posts = {
-      id: { type: String },
-      title: { type: String },
-      content: { type: String },
-      author: { type: String },
-    }
 
-const queryRoot = new GraphQLObjectType({
-    name: 'Query',
-    fields: () => {
-        posts : {
-            type:[posts]
-        }
-    }
-})
 const schema = new GraphQLSchema({ query: queryRoot })
 
 export default schema
