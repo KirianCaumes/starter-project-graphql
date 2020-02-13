@@ -43,18 +43,20 @@ describe('GET /', () => {
         expect(response.body.data.post.title).toBe("Second blog post")
     })
 
-    //   test('verify send many posts has authors', async () => {
-    //     const query_string = `{
-    //         posts{
-    //         title,
-    //         author {
-    //             name  
-    //         }
-    //       }
-    //       }`
-    //     response = await request(app)
-    //       .post('/graphql').send({ query: query_string })
-    //     expect(response.body.data.posts[0].title).toBe("My first blog post")
-    //     console.log(response.body)
-    //   })
+    test('verify send many posts has authors', async () => {
+        const query_string = `{
+            posts {
+                title,
+                author {
+                    name  
+                }
+            }
+          }
+        `
+        response = await request(app)
+            .post('/graphql')
+            .send({ query: query_string })
+        // expect(response.body.data.posts[0].title).toBe("My first blog post")
+        expect(response.body.data.posts[0].author.name).toBe("Xavier Decuyper")
+    })
 });
